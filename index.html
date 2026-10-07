@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Re-Eabrica</title>
+    <meta
+      name="description"
+      content="Re-Eabrica منصة رقمية لإعادة استخدام مخلفات الأقمشة والنسيج بطريقة مستدامة." 
+    />
+    <meta name="theme-color" content="#2E7D32" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Re-Eabrica" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='70' font-size='80' text-anchor='middle'>♻️</text></svg>" />
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%232E7D32' width='180' height='180' rx='40'/><text x='90' y='130' font-size='100' text-anchor='middle' fill='white'>♻️</text></svg>" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar hidden-on-welcome">
+        <div class="brand-mini">
+          <span class="brand-mark">♻️</span>
+          <span>Re-Eabrica</span>
+        </div>
+        <div id="headerUserBadge" class="header-user-badge"></div>
+        <button class="ghost-button" id="logoutBtn" type="button">تسجيل الخروج</button>
+      </header>
+
+      <main>
+        <section id="welcome-screen" class="page active">
+          <div class="welcome-wrapper">
+            <div class="logo-pill">Re-Eabrica</div>
+            <div class="welcome-hero">
+              <div class="hero-copy">
+                <h1>إعادة استخدام الأقمشة، خطوة نحو مستقبل أخضر.</h1>
+                <p>
+                  منصة عربية تربط بين مصانع الملابس والجهات التي تحتاج إلى خامات
+                  مستدامة، لتقليل الهدر وتعزيز الاقتصاد الدائري.
+                </p>
+              </div>
+              <div class="hero-card">
+                <div class="card-badge">استدامة</div>
+                <div class="stat-inline">
+                  <strong>1250 كجم</strong>
+                  <span>تمت إعادة استخدامه</span>
+                </div>
+                <div class="stat-inline">
+                  <strong>35 عملية</strong>
+                  <span>إعادة استخدام</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="welcome-actions">
+              <button class="primary-button" data-action="login">تسجيل الدخول</button>
+              <button class="secondary-button" data-action="register">إنشاء حساب</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="auth-screen" class="page">
+          <div class="auth-card">
+            <div class="auth-header">
+              <button class="back-link" data-screen="welcome">العودة</button>
+              <h2 id="authTitle">تسجيل الدخول</h2>
+            </div>
+
+            <form id="loginForm" class="auth-form active-form">
+              <label>
+                البريد الإلكتروني أو رقم الهاتف
+                <input type="text" id="loginIdentifier" placeholder="example@email.com" required />
+              </label>
+              <label>
+                كلمة المرور
+                <input type="password" id="loginPassword" placeholder="أدخل كلمة المرور" required />
+              </label>
+              <button type="submit" class="primary-button full-width">تسجيل الدخول</button>
+              <div class="auth-links">
+                <a href="#" data-action="toRegister">إنشاء حساب جديد</a>
+                <a href="#" data-action="restore">استعادة كلمة المرور</a>
+              </div>
+              <p id="loginError" class="error-message" aria-live="polite"></p>
+            </form>
+
+            <form id="registerForm" class="auth-form">
+              <div class="segmented-toggle">
+                <button type="button" class="toggle-option active" data-user-type="seller">بائع</button>
+                <button type="button" class="toggle-option" data-user-type="buyer">مشتري</button>
+              </div>
+
+              <div class="two-column">
+                <label>
+                  الاسم
+                  <input type="text" id="regName" placeholder="اكتب اسمك" required />
+                </label>
+                <label>
+                  البريد الإلكتروني
+                  <input type="email" id="regEmail" placeholder="name@email.com" required />
+                </label>
+              </div>
+
+              <div class="two-column">
+                <label>
+                  رقم الهاتف
+                  <input type="tel" id="regPhone" placeholder="05xxxxxxxx" required />
+                </label>
+                <label>
+                  كلمة المرور
+                  <input type="password" id="regPassword" placeholder="********" required />
+                </label>
+              </div>
+
+              <div id="sellerFields">
+                <div class="two-column">
+                  <label>
+                    اسم المصنع أو الجهة
+                    <input type="text" id="regFactoryName" placeholder="اسم المصنع" />
+                  </label>
+                  <label>
+                    المحافظة
+                    <select id="regGovernorate" required>
+                      <option value="">اختر المحافظة</option>
+                      <option value="القاهرة">القاهرة</option>
+                      <option value="الجيزة">الجيزة</option>
+                      <option value="الإسكندرية">الإسكندرية</option>
+                      <option value="الدقهلية">الدقهلية</option>
+                      <option value="البحر الأحمر">البحر الأحمر</option>
+                      <option value="البحيرة">البحيرة</option>
+                      <option value="الفيوم">الفيوم</option>
+                      <option value="الغربية">الغربية</option>
+                      <option value="الإسماعيلية">الإسماعيلية</option>
+                      <option value="المنوفية">المنوفية</option>
+                      <option value="المنيا">المنيا</option>
+                      <option value="القليوبية">القليوبية</option>
+                      <option value="الوادي الجديد">الوادي الجديد</option>
+                      <option value="السويس">السويس</option>
+                      <option value="أسوان">أسوان</option>
+                      <option value="أسيوط">أسيوط</option>
+                      <option value="بني سويف">بني سويف</option>
+                      <option value="بورسعيد">بورسعيد</option>
+                      <option value="دمياط">دمياط</option>
+                      <option value="الشرقية">الشرقية</option>
+                      <option value="جنوب سيناء">جنوب سيناء</option>
+                      <option value="كفر الشيخ">كفر الشيخ</option>
+                      <option value="مطروح">مطروح</option>
+                      <option value="الأقصر">الأقصر</option>
+                      <option value="قنا">قنا</option>
+                      <option value="شمال سيناء">شمال سيناء</option>
+                      <option value="سوهاج">سوهاج</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+              <div class="two-column">
+                <label>
+                  المدينة
+                  <input type="text" id="regCity" placeholder="المدينة" required />
+                </label>
+                <label>
+                  العنوان
+                  <input type="text" id="regAddress" placeholder="العنوان التفصيلي" required />
+                </label>
+              </div>
+
+              <label>
+                صورة المستخدم / شعار المصنع
+                <input type="file" id="profileImageUpload" accept="image/*" />
+              </label>
+
+              <button type="submit" class="primary-button full-width">إنشاء الحساب</button>
+              <p id="registerError" class="error-message" aria-live="polite"></p>
+            </form>
+          </div>
+        </section>
+
+        <section id="market-screen" class="page">
+          <div class="page-header with-search">
+            <div>
+              <p class="eyebrow">السوق</p>
+              <h2>الخامات المتاحة</h2>
+            </div>
+          </div>
+
+          <div class="search-panel card">
+            <input type="search" id="searchInput" placeholder="ابحث عن خامة أو نوع قماش..." />
+            <div class="filters-grid">
+              <select id="typeFilter">
+                <option value="">نوع القماش</option>
+              </select>
+              <select id="colorFilter">
+                <option value="">اللون</option>
+              </select>
+              <select id="governorateFilter">
+                <option value="">المحافظة</option>
+              </select>
+              <select id="statusFilter">
+                <option value="">حالة الخامة</option>
+                <option value="available">متاحة</option>
+                <option value="sold">مباعة</option>
+                <option value="inactive">غير نشطة</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="dashboard-section">
+            <div id="seller-dashboard" class="stats-grid"></div>
+            <div class="sustainability-panel card">
+              <h3>الأثر البيئي</h3>
+              <div id="sustainabilityStats" class="stats-list"></div>
+            </div>
+          </div>
+
+          <div id="productsGrid" class="products-grid"></div>
+        </section>
+
+        <section id="favorites-screen" class="page">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">المفضلة</p>
+              <h2>الخامات المحفوظة</h2>
+            </div>
+          </div>
+          <div id="favoritesGrid" class="products-grid"></div>
+        </section>
+
+        <section id="orders-screen" class="page">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">الطلبات</p>
+              <h2>طلباتي</h2>
+            </div>
+          </div>
+          <div id="ordersList" class="orders-list"></div>
+        </section>
+
+        <section id="profile-screen" class="page">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">الحساب</p>
+              <h2>ملفي الشخصي</h2>
+            </div>
+          </div>
+          <div id="profileCard" class="profile-card card"></div>
+        </section>
+
+        <section id="add-product-screen" class="page">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">البائع</p>
+              <h2>إضافة خامة جديدة</h2>
+            </div>
+          </div>
+
+          <form id="addProductForm" class="card form-card">
+            <div class="two-column">
+              <label>
+                اسم الخامة
+                <input type="text" id="productName" placeholder="مثال: قصاصات جينز" required />
+              </label>
+              <label>
+                نوع القماش
+                <select id="materialType" required>
+                  <option value="">اختر نوع القماش</option>
+                  <option value="قطن">قطن</option>
+                  <option value="كتان">كتان</option>
+                  <option value="صوف">صوف</option>
+                  <option value="حرير">حرير</option>
+                  <option value="بوليستر">بوليستر</option>
+                  <option value="فيسكوز">فيسكوز</option>
+                  <option value="جبردين">جبردين</option>
+                  <option value="جينز">جينز</option>
+                  <option value="شيفون">شيفون</option>
+                  <option value="كريب">كريب</option>
+                  <option value="ساتان">ساتان</option>
+                  <option value="ليكرا">ليكرا</option>
+                  <option value="مخمل">مخمل</option>
+                  <option value="جوخ">جوخ</option>
+                  <option value="تول">تول</option>
+                  <option value="دانتيل">دانتيل</option>
+                  <option value="جلد">جلد</option>
+                  <option value="فرو">فرو</option>
+                  <option value="قماش تنجيد">قماش تنجيد</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="two-column">
+              <label>
+                اللون
+                <select id="productColor" required>
+                  <option value="">اختر اللون</option>
+                  <option value="أحمر">أحمر</option>
+                  <option value="أزرق">أزرق</option>
+                  <option value="أخضر">أخضر</option>
+                  <option value="أصفر">أصفر</option>
+                  <option value="أسود">أسود</option>
+                  <option value="أبيض">أبيض</option>
+                  <option value="بني">بني</option>
+                  <option value="رمادي">رمادي</option>
+                  <option value="بيج">بيج</option>
+                  <option value="كحلي">كحلي</option>
+                  <option value="موف">موف</option>
+                  <option value="بمبي">بمبي</option>
+                  <option value="تركواز">تركواز</option>
+                  <option value="زيتي">زيتي</option>
+                  <option value="جملي">جملي</option>
+                  <option value="سكري">سكري</option>
+                </select>
+              </label>
+              <label>
+                الحالة
+                <select id="productCondition" required>
+                  <option value="">اختر الحالة</option>
+                  <option value="جديدة">جديدة</option>
+                  <option value="مستعملة">مستعملة</option>
+                  <option value="مخلفات">مخلفات</option>
+                  <option value="مخلوطة">مخلوطة</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="two-column">
+              <label>
+                الكمية
+                <input type="number" id="productQuantity" min="1" placeholder="100" required />
+              </label>
+              <label>
+                الوحدة
+                <select id="productUnit" required>
+                  <option value="">اختر الوحدة</option>
+                  <option value="كجم">كجم</option>
+                  <option value="متر">متر</option>
+                  <option value="قطعة">قطعة</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="two-column">
+              <label>
+                السعر
+                <input type="number" id="productPrice" min="0" placeholder="50" required />
+              </label>
+              <label>
+                المحافظة
+                <select id="productGovernorate" required>
+                  <option value="">اختر المحافظة</option>
+                  <option value="القاهرة">القاهرة</option>
+                  <option value="الجيزة">الجيزة</option>
+                  <option value="الإسكندرية">الإسكندرية</option>
+                  <option value="الدقهلية">الدقهلية</option>
+                  <option value="البحر الأحمر">البحر الأحمر</option>
+                  <option value="البحيرة">البحيرة</option>
+                  <option value="الفيوم">الفيوم</option>
+                  <option value="الغربية">الغربية</option>
+                  <option value="الإسماعيلية">الإسماعيلية</option>
+                  <option value="المنوفية">المنوفية</option>
+                  <option value="المنيا">المنيا</option>
+                  <option value="القليوبية">القليوبية</option>
+                  <option value="الوادي الجديد">الوادي الجديد</option>
+                  <option value="السويس">السويس</option>
+                  <option value="أسوان">أسوان</option>
+                  <option value="أسيوط">أسيوط</option>
+                  <option value="بني سويف">بني سويف</option>
+                  <option value="بورسعيد">بورسعيد</option>
+                  <option value="دمياط">دمياط</option>
+                  <option value="الشرقية">الشرقية</option>
+                  <option value="جنوب سيناء">جنوب سيناء</option>
+                  <option value="كفر الشيخ">كفر الشيخ</option>
+                  <option value="مطروح">مطروح</option>
+                  <option value="الأقصر">الأقصر</option>
+                  <option value="قنا">قنا</option>
+                  <option value="شمال سيناء">شمال سيناء</option>
+                  <option value="سوهاج">سوهاج</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="two-column">
+              <label>
+                المدينة
+                <input type="text" id="productCity" placeholder="المنصورة" required />
+              </label>
+              <label>
+                صورة المنتج (رابط)
+                <input type="url" id="productImage" placeholder="https://example.com/image.jpg" />
+              </label>
+            </div>
+
+            <label>
+              وصف الخامة
+              <textarea id="productDescription" rows="4" placeholder="وصف مختصر للخامه والملحقات..." required></textarea>
+            </label>
+
+            <button type="submit" class="primary-button full-width">نشر الخامة</button>
+          </form>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" id="bottomNav">
+        <button class="nav-item active" data-screen="market">
+          <span>السوق</span>
+        </button>
+        <button class="nav-item" data-screen="favorites">
+          <span>المفضلة</span>
+        </button>
+        <button class="nav-item" data-screen="orders">
+          <span>الطلبات</span>
+        </button>
+        <button class="nav-item" data-screen="profile">
+          <span>حسابي</span>
+        </button>
+        <button class="nav-item seller-only" data-screen="add-product">
+          <span>إضافة خامة</span>
+        </button>
+      </nav>
+    </div>
+
+    <aside id="productModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-content">
+        <button class="close-modal" type="button" id="closeModal">×</button>
+        <div id="modalBody"></div>
+      </div>
+    </aside>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('service-worker.js').catch((error) => {
+            console.log('Service Worker registration failed:', error);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
