@@ -12,132 +12,13 @@ const COLOR_OPTIONS = [
   'أحمر','أزرق','أخضر','أصفر','أسود','أبيض','بني','رمادي','بيج','كحلي','موف','بمبي','تركواز','زيتي','جملي','سكري'
 ];
 
-const defaultUsers = [
-  {
-    userId: 'u1',
-    name: 'أحمد علي',
-    email: 'seller@reeabrica.com',
-    phone: '0500000000',
-    password: '123456',
-    userType: 'seller',
-    factoryName: 'مصنع النسيج العربي',
-    governorate: 'الدقهلية',
-    city: 'المنصورة',
-    address: 'شارع الثورة 24',
-    createdAt: '2026-09-10T12:00:00.000Z'
-  },
-  {
-    userId: 'u2',
-    name: 'سارة محمد',
-    email: 'buyer@reeabrica.com',
-    phone: '0555555555',
-    password: '123456',
-    userType: 'buyer',
-    factoryName: 'ورشة النسيج',
-    governorate: 'القاهرة',
-    city: 'الهرم',
-    address: 'شارع السلام 15',
-    createdAt: '2026-09-11T14:30:00.000Z'
-  }
-];
+const defaultUsers = [];
 
-const defaultProducts = [
-  {
-    productId: 'p1',
-    sellerId: 'u1',
-    productName: 'قصاصات جينز زرقاء',
-    materialType: 'جينز',
-    description: 'قصاصات جينز عالية الجودة، مناسبة لإعادة التدوير في المشاريع اليدوية أو الإنتاج.',
-    price: 50,
-    quantity: 100,
-    unit: 'كجم',
-    color: 'أزرق',
-    condition: 'مخلفات',
-    governorate: 'الدقهلية',
-    city: 'المنصورة',
-    images: ['https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80'],
-    status: 'available',
-    createdAt: '2026-09-15T09:00:00.000Z'
-  },
-  {
-    productId: 'p2',
-    sellerId: 'u1',
-    productName: 'خامة قطن بيضاء',
-    materialType: 'قطن',
-    description: 'قطن طبيعي متبقي من عمليات الإنتاج، مناسب للتطبيقات الخفيفة والمصنوعات اليدوية.',
-    price: 42,
-    quantity: 60,
-    unit: 'كجم',
-    color: 'أبيض',
-    condition: 'جديدة',
-    governorate: 'الجيزة',
-    city: 'القاهرة',
-    images: ['https://images.unsplash.com/photo-1585071455592-29b46f235cbb?auto=format&fit=crop&w=1200&q=80'],
-    status: 'available',
-    createdAt: '2026-09-16T10:20:00.000Z'
-  },
-  {
-    productId: 'p3',
-    sellerId: 'u1',
-    productName: 'أقمشة بوليستر فائضة',
-    materialType: 'بوليستر',
-    description: 'مخزون فائق من أقمشة البوليستر المستعملة في صناعة الملابس، مناسب للتجهيزات.',
-    price: 38,
-    quantity: 80,
-    unit: 'متر',
-    color: 'أسود',
-    condition: 'مخلوطة',
-    governorate: 'الشرقية',
-    city: 'الزقازيق',
-    images: ['https://images.unsplash.com/photo-1554568218-0f1715e72254?auto=format&fit=crop&w=1200&q=80'],
-    status: 'available',
-    createdAt: '2026-09-18T13:00:00.000Z'
-  },
-  {
-    productId: 'p4',
-    sellerId: 'u1',
-    productName: 'قصاصات كتان مخططة',
-    materialType: 'كتان',
-    description: 'قصاصات ملونة بألوان متدرجة، ممتازة للتصميمات الفنية وإعادة الاستخدام في المشاريع.',
-    price: 55,
-    quantity: 45,
-    unit: 'كجم',
-    color: 'أخضر',
-    condition: 'مخلفات',
-    governorate: 'المنوفية',
-    city: 'شبين الكوم',
-    images: ['https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1200&q=80'],
-    status: 'available',
-    createdAt: '2026-09-20T08:45:00.000Z'
-  }
-];
+const defaultProducts = [];
 
-const defaultFavorites = [
-  { favoriteId: 'f1', userId: 'u2', productId: 'p1', createdAt: '2026-09-20T11:00:00.000Z' }
-];
+const defaultFavorites = [];
 
-const defaultOrders = [
-  {
-    orderId: 'o1',
-    buyerId: 'u2',
-    sellerId: 'u1',
-    productId: 'p1',
-    requestedQuantity: 25,
-    totalPrice: 1250,
-    status: 'pending',
-    createdAt: '2026-09-24T16:10:00.000Z'
-  },
-  {
-    orderId: 'o2',
-    buyerId: 'u2',
-    sellerId: 'u1',
-    productId: 'p2',
-    requestedQuantity: 15,
-    totalPrice: 630,
-    status: 'accepted',
-    createdAt: '2026-09-25T09:30:00.000Z'
-  }
-];
+const defaultOrders = [];
 
 let state = loadState();
 let selectedProductId = null;
