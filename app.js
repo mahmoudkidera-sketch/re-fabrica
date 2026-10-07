@@ -210,22 +210,24 @@ function fillRegistrationSelectors() {
 }
 
 function loginUser(identifier, password) {
+  const cleanIdentifier = identifier.trim().toLowerCase();
   const foundUser = state.users.find((user) => {
-    const matchesEmail = user.email.toLowerCase() === identifier.toLowerCase();
-    const matchesPhone = user.phone === identifier;
+    const matchesEmail = user.email.toLowerCase().trim() === cleanIdentifier;
+    const matchesPhone = user.phone.trim() === identifier.trim();
     const matchesPassword = user.password === password;
     return (matchesEmail || matchesPhone) && matchesPassword;
   });
 
   if (!foundUser) {
-    document.getElementById('loginError').textContent = 'بيانات الدخول غير صحيحة، يرجى التحقق من البريد/الرقم وكلمة المرور.';
+    document.getElementById('loginError').textContent = 'البريد او التليفون او الباسورد غلط';
     return;
   }
 
   state.currentUserId = foundUser.userId;
   saveState();
-  showToast(`مرحبًا ${foundUser.name}`);
+  showToast(`مرحبا ${foundUser.name}`);
   setScreen('market');
+}
 }
 
 function registerUser(event) {
@@ -347,9 +349,14 @@ function renderProducts() {
             <span><label>السعر</label><strong>${product.price} جنيه/${product.unit}</strong></span>
             <span><label>المكان</label><strong>${product.governorate}</strong></span>
           </div>
-          <div class="card-actions">
-            <button type="button" class="link-button" data-open-product="${product.productId}">فتح التفاصيل</button>
-          </div>
+               <div class="card-actions">
+          <button type="button" class="link-button" data-open-product="${product.productId}">تفاصيل</button>
+          ${product.sellerId === state.currentUserId ?
+            `<button onclick="deleteProduct('${product.id || product.productId}')" style="background:#ef4444;color:white;padding:6px 10px;border-radius:6px;border:none;cursor:pointer">حذف</button>`
+            :
+            `<button onclick="contactSeller('${(state.users.find(u=>u.userId===product.sellerId)?.phone || '')}', '${product.sellerId}')" style="background:#25D366;color:white;padding:6px 10px;border-radius:6px;border:none;cursor:pointer">تواصل واتساب</button>`
+          }
+        </div>
         </div>
       </article>
     `;
@@ -1013,6 +1020,30 @@ function normalizeProductImage(product) {
   if (product.materialType) return getFabricImage(product.materialType);
   if (Array.isArray(product.images) && product.images.length) return product.images[0];
   return 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80';
+}
+function deleteProduct(id){
+  if(!confirm('متأكد عاوز تمسح الخامة دي؟')) return;
+  state.products = state.products.filter(p => (p.id || p.productId) !== id);
+  saveState();
+  renderProducts();
+  showToast('تم الحذف');
+}
+function contactSeller(phone, sellerId){
+  if(!phone){
+    showToast('رقم البائع مش متسجل');
+    return;
+  }
+  let p = phone.replace(/\D/g,'');
+  if(p.startsWith('0')) p = '20' + p.substring(1);
+  
+  const seller = state.users.find(u=>u.userId===sellerId);
+  const city = seller?.city || seller?.location || 'منطقتك';
+  const name = seller?.name || 'حضرتك';
+
+  const msg = `السلام عليكم ${name}، شفت الخامة بتاعتك المعروضة في ${city} وحابب اتواصل معاك`;
+  
+  window.open(`https://wa.me/${p}?text=${encodeURIComponent(msg)}`, '_blank');
+}
 }
 
 boot();
